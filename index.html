@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پەیمانگا</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="design.css">
+</head>
+
+<body>
+    <header class="bg-primary text-white text-center py-5 shadow">
+        <div class="container">
+            <h1 class="display-4">پەیمانگای یاد</h1>
+            <p class="lead">بەخێربێن بۆ پەیمانگاکەمان. خۆشحاڵین بە بەشداریکردنتان!</p>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <!-- Subjects Section -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>لیستی وانەکان</h3>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSubjectModal">زیادکردنی
+                    وانە</button>
+            </div>
+            <div class="row" id="subject-list">
+                <!-- Subjects will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Teachers List -->
+        <section class="mb-5">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0 p-2">لیستی مامۆستایان</h3>
+                </div>
+                <div class="card-body">
+                    <div id="teachers-list" class="row"></div>
+                </div>
+            </div>
+            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#addTeacherModal">تۆمارکردنی
+                مامۆستا نوێ <span class="fs-4">+</span> </button>
+        </section>
+    </div>
+
+    <!-- Modal for Adding Teacher -->
+    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel"
+        aria-hidden="true" class="position-realative">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTeacherModalLabel">تۆمارکردنی مامۆستا نوێ</h5>
+                    <button type="button" class="btn-close closeBtn position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="teacher-form">
+                        <div class="mb-3">
+                            <label for="teacher-name" class="form-label">ناوی مامۆستا</label>
+                            <input type="text" class="form-control" id="teacher-name" name="name"
+                                placeholder="ناوی مامۆستا بنووسە" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-code" class="form-label">کۆدی مامۆستا</label>
+                            <input type="text" class="form-control" id="teacher-code" name="code"
+                                placeholder="کۆدی مامۆستا بنووسە" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-phone" class="form-label">ژمارەی مۆبایل</label>
+                            <input type="text" class="form-control" id="teacher-phone" name="phone"
+                                placeholder="ژمارەی مۆبایل بنووسە" required pattern="^\d{10,11}$">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-certificate" class="form-label">بڕوانامە</label>
+                            <select class="form-select" id="teacher-certificate" name="certificate" required>
+                                <option value="" disabled selected>بڕوانامە هەلبژێرە</option>
+                                <option value="دبلۆم">دبلۆم</option>
+                                <option value="بەکالۆریۆس">بەکالۆریۆس</option>
+                                <option value="ماستەر">ماستەر</option>
+                                <option value="دکتۆرا">دکتۆرا</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">اختصاص</label>
+                            <div id="certificate-section">
+                                <div class="certificate-input mb-3">
+                                    <input type="text" class="form-control mb-2" name="certificate[]" placeholder="اختصاص بنووسە">
+                                    <button type="button" class="btn btn-secondary btn-sm add-certificate">زیادکردنی اختصاص</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label">ڕەگەز</label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="radio" id="teacher-gender-male" name="gender" value="نێر" required>
+                            <label for="teacher-gender-male">نێر</label>
+                            <input type="radio" id="teacher-gender-female" name="gender" value="مێ" required>
+                            <label for="teacher-gender-female">مێ</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-email" class="form-label">ئیمەیڵ</label>
+                            <input type="email" class="form-control" id="teacher-email" name="email"
+                                placeholder="ئیمەیڵ بنووسە">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ئایا کارپێکراوی؟</label>
+                            <div>
+                                <input type="radio" id="employed-yes" name="employed" value="بەڵێ" required>
+                                <label for="employed-yes">بەڵێ</label>
+                                <input type="radio" id="employed-no" name="employed" value="نەخێر" required>
+                                <label for="employed-no">نەخێر</label>
+                            </div>
+                        </div>
+                        <div class="mb-3 d-none" id="school-name-section">
+                            <label for="teacher-school" class="form-label">ناوی پەیمانگە</label>
+                            <input type="text" class="form-control" id="teacher-school" name="school" placeholder="ناوی پەیمانگە بنووسە">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-picture" class="form-label">وێنە</label>
+                            <input type="file" class="form-control" id="teacher-picture" name="picture" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-emergency-phone" class="form-label">ژمارەی فۆن لە کەسایەتییەکان</label>
+                            <input type="text" class="form-control" id="teacher-emergency-phone" name="emergency_phone"
+                                placeholder="ژمارەی فۆن لە کەسایەتییەکان بنووسە" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-working-share" class="form-label">بەشێک لە کارپێکردن</label>
+                            <input type="text" class="form-control" id="teacher-working-share" name="working_share"
+                                placeholder="بەشێک لە کارپێکردن بنووسە" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-cv" class="form-label">CV</label>
+                            <input type="file" class="form-control" id="teacher-cv" name="cv" accept=".pdf">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">تۆمارکردن</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
